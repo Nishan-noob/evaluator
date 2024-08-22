@@ -15,7 +15,8 @@ function HomePage() {
 
   return (
     <>
-      <h1>ALMANAR MADRASSA GRADING SYSTEM</h1>
+      <h1>Madrasathul Manar Chinakkal</h1>  
+      <h2>QURAN RECITATION TEST</h2>
       <h2>Classes</h2>
       <div className="class-tiles">
         {classes.map((className, index) => (
