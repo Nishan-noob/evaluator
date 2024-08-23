@@ -51,7 +51,7 @@
     display: flex;
     align-items:center;
     /* align-items:flex-start; */
-    width: 30%;
+    width: 35%;
     justify-content: space-between; /* Distribute buttons and counter evenly */
   }
   
@@ -70,6 +70,13 @@
   .counter-group button:nth-child(3) {
     background-color: green;
     color: #fff;
+  }
+  .counter{
+    padding-left:5px ;
+    padding-right:5px ;
+    font-size: 1.2em; /* Increase font size for prominence */
+    font-weight: bold;
+
   }
   .disable-counter {
     width: 20px; /* Adjust the width as needed */
