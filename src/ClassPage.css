@@ -1,7 +1,7 @@
 .class-page {
     display: flex;
     flex-direction: column;
-align-items: center;
+    align-items: center;
     width: 100%;
     text-align: center; /* Center the content horizontally */
   }
@@ -16,7 +16,8 @@ align-items: center;
   .student-tile {
     display: flex;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
+    justify-content: space-between;
     background-color: #f0f0f0;
     padding: 10px;
     border-radius: 5px;
@@ -27,7 +28,49 @@ align-items: center;
     font-weight: bold;
     color: #333;
   }
+  .serial-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5%;
+    background-color: black;
+    color: white ; /* Optional background color for serial number */
+    border-radius: 50%; /* Circular shape */
+    padding: 10px;
+    font-weight: bold;
+  }
+  .student-name {
+    width: 50%;
+    text-align: left;
+    font-size: 1.2em; /* Increase font size for prominence */
+  font-weight: bold;
+  text-transform: uppercase;  
+  }
   
+  .counter-group {
+    display: flex;
+    align-items:center;
+    /* align-items:flex-start; */
+    width: 25%;
+    justify-content: space-between; /* Distribute buttons and counter evenly */
+  }
+  
+  .counter-group button {
+    padding: 7px 10px;
+    padding-bottom: 9px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .counter-group button:first-child {
+    background-color: #f00; /* Red background for minus button */
+    color: #fff;
+  }
+  .counter-group button:nth-child(3) {
+    background-color: green;
+    color: #fff;
+  }
   .add-student-modal {
     display: flex;
     flex-direction: column;
