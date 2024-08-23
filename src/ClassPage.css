@@ -56,8 +56,8 @@
   }
   
   .counter-group button {
-    padding: 7px 10px;
-    padding-bottom: 9px;
+    padding: 10px 15px;
+    padding-bottom: 11px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -71,6 +71,11 @@
     background-color: green;
     color: #fff;
   }
+  .disable-counter {
+    width: 20px; /* Adjust the width as needed */
+    height: 20px; /* Adjust the height as needed */
+  }
+
   .add-student-modal {
     display: flex;
     flex-direction: column;
