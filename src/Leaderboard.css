@@ -6,7 +6,7 @@
   }
   
   .leaderboard-page h1 {
-    font-size: 50px;
+    font-size: 25px;
     margin-bottom: 15px;
   }
   
@@ -87,4 +87,7 @@
   .student-count {
     margin-right: 10px; /* Spacing between name and count */
     font-size: 16px; /* Adjust student info font size */
+  }
+  .pdfbtn{
+    margin-left:5vw;
   }

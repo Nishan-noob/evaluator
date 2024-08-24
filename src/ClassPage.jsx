@@ -73,7 +73,8 @@ function ClassPage() {
   const date = today.getDate();
   const month = today.getMonth() + 1;
   const year = today.getFullYear();
-  const currentDate = date + "/" + month + "/" + year;
+  const lastTwoDigitsOfYear = year % 100;
+  const currentDate = date + "/" + month + "/" + lastTwoDigitsOfYear;
 
   return (
     <div className="class-page">
