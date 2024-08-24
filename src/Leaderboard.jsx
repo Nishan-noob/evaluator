@@ -61,15 +61,46 @@ const Leaderboard = () => {
 
   const leaderboardRef = useRef(null); // Reference to the leaderboard container
 
+  // const handleDownloadPDF = () => {
+  //   const input = leaderboardRef.current;
+  //   html2canvas(input).then((canvas) => {
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF("p", "mm", "a4");
+  //     const imgProps = pdf.getImageProperties(imgData);
+  //     const pdfWidth = pdf.internal.pageSize.getWidth();
+  //     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  //     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  //     pdf.save(`${className}_Leaderboard.pdf`);
+  //   });
+  // };
+
   const handleDownloadPDF = () => {
     const input = leaderboardRef.current;
-    html2canvas(input).then((canvas) => {
+
+    html2canvas(input, {
+      scale: 2, // Increase the scale for better quality
+      useCORS: true, // Enable cross-origin images
+    }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+      // Calculate the number of pages needed
+      const imgWidth = 210; // A4 size width in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const pageHeight = 297; // A4 size height in mm
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
       pdf.save(`${className}_Leaderboard.pdf`);
     });
   };
@@ -109,7 +140,9 @@ const Leaderboard = () => {
           ))}
         </div>
       </div>
-        <button className="pdfbtn" onClick={handleDownloadPDF}>Download PDF</button>
+      <button className="pdfbtn" onClick={handleDownloadPDF}>
+        Download PDF
+      </button>
     </div>
   );
 };
