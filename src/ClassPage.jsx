@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link ,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { db } from "./firebase";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import "./ClassPage.css";
 
 function ClassPage() {
@@ -10,6 +12,7 @@ function ClassPage() {
     "student 2",
     "student 3",
   ]);
+
   const [studentCounts, setStudentCounts] = useState(() => {
     // Initialize studentCounts with initial values
     const initialCounts = {};
@@ -19,11 +22,22 @@ function ClassPage() {
     return initialCounts;
   });
 
-  const handleAddStudent = () => {
+
+  const handleAddStudent = async () => {
     if (newStudentName.trim() !== "") {
-      setStudents([...students, newStudentName]);
-      setStudentCounts({ ...studentCounts, [newStudentName]: 0 }); // Initialize count to 0
-      setNewStudentName("");
+      try {
+        // Create a reference to the "students" subcollection within the class document
+        const studentsRef = collection(db, "classes", className, "students");
+        const newStudentDoc = await addDoc(studentsRef, {
+          name: newStudentName,
+        });
+
+        setStudents([...students, newStudentName]); // Update with the student name
+        setStudentCounts({ ...studentCounts, [newStudentName]: 0 }); // Initialize count to 0
+        setNewStudentName("");
+      } catch (error) {
+        console.error("Error adding student:", error);
+      }
     }
   };
 
@@ -40,7 +54,7 @@ function ClassPage() {
   return (
     <div className="class-page">
       <h1>Students in {className}</h1>
-      <Link to={`/class/${className}/leaderboard`}  >
+      <Link to={`/class/${className}/leaderboard`}>
         <button className="leaderboard-link">Leaderboard</button>{" "}
       </Link>
       <div className="student-tiles">
