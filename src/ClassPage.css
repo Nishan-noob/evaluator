@@ -17,7 +17,8 @@
 
   .inline-heading {
     display: flex;
-    justify-content: space-between; /* Distribute headings evenly */
+    justify-content: space-between; 
+    align-items: center; /* Distribute headings evenly */
     width: 100%; 
     height: 5vh;/* Remove unnecessary flex-wrap */
     margin-bottom: 50px;/* Add spacing between tiles */
