@@ -1,8 +1,10 @@
-# React + Vite
+# Evaluator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**This for personal use only**
 
-Currently, two official plugins are available:
+ counter app, student attendance tracker
+ 
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* functionalities like adding/removing students, manipulating counters, or managing data.
+
