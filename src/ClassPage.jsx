@@ -69,10 +69,25 @@ function ClassPage() {
       // Consider showing an error message to the user
     }
   };
+  const today = new Date();
+  const date = today.getDate();
+  const month = today.getMonth() + 1;
+  const year = today.getFullYear();
+  const currentDate = date + "/" + month + "/" + year;
 
   return (
     <div className="class-page">
-      <h1>Students in {className}</h1>
+      <h1>Madrasathul Manar Chinakkal</h1>
+      <h2>QURAN RECITATION TEST</h2>
+      <div className="inline-heading">
+        <div className="currentClassTile">
+          <span>{className}</span>
+        </div>
+        <div className="currentDateTile">
+          <span>{currentDate}</span>
+        </div>
+      </div>
+      {/* <h1>Students in {className}</h1> */}
       <Link to={`/class/${className}/leaderboard`}>
         <button className="leaderboard-link">Leaderboard</button>
       </Link>
