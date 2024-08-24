@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link ,useParams } from "react-router-dom";
 import "./ClassPage.css";
 
 function ClassPage() {
@@ -40,6 +40,9 @@ function ClassPage() {
   return (
     <div className="class-page">
       <h1>Students in {className}</h1>
+      <Link to={`/class/${className}/leaderboard`}  >
+        <button className="leaderboard-link">Leaderboard</button>{" "}
+      </Link>
       <div className="student-tiles">
         {students.map((studentName, index) => (
           <div key={index} className="student-tile">

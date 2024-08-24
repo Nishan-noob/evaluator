@@ -5,7 +5,15 @@
     width: 100%;
     text-align: center; /* Center the content horizontally */
   }
-  
+  .leaderboard-link {
+    color: white;
+    background-color: #333;
+    border: 2px solid white; /* Set the border width, style, and color */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
   .student-tiles {
     display: flex;
     flex-direction: column;
