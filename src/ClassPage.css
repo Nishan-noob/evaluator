@@ -1,156 +1,151 @@
 .class-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100vw;
-    text-align: center; /* Center the content horizontally */
-  }
-  .leaderboard-link {
-    color: white;
-    background-color: #333;
-    border: 2px solid white; /* Set the border width, style, and color */
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-    margin-bottom: 30px;
-  }
-  .class-page h1{
-    font-size: 30px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  text-align: center;
+}
 
-  .inline-heading {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; /* Distribute headings evenly */
-    width: 100%; 
-    height: 5vh;/* Remove unnecessary flex-wrap */
-    margin-bottom: 50px;/* Add spacing between tiles */
+.leaderboard-link {
+  color: white;
+  background-color: #333;
+  border: 2px solid white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.class-page h1 {
+  font-size: 30px;
+}
+
+.inline-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 5vh;
+  margin-bottom: 50px;
 }
 
 .currentClassTile,
 .currentDateTile {
-    background-color: #eee;
-    padding: 7px; /* Adjust padding if needed */
-    border-radius: 5px;
-    color: black;
-    width: 20%;
-    font-size: 1.2em;
-    /* bold font */
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 5px; 
-  }
-
-  .student-tiles {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    justify-content: center;
-  }
-  
-  .student-tile {
-    display: flex;
-    align-items: center;
-    /* justify-content: center; */
-    justify-content: space-between;
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 0 auto;
-    width: 90%;
-    margin-bottom: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-  }
-  .serial-number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 5%;
-    background-color: black;
-    color: white ; /* Optional background color for serial number */
-    border-radius: 50%; /* Circular shape */
-    padding: 10px;
-    font-weight: bold;
-  }
-  .student-name {
-    width: 50%;
-    text-align: left;
-    font-size: 1.2em; /* Increase font size for prominence */
+  background-color: #eee;
+  padding: 7px;
+  border-radius: 5px;
+  color: black;
+  width: 20%;
+  font-size: 1.2em;
   font-weight: bold;
-  text-transform: uppercase;  
-  }
-  
-  .counter-group {
-    display: flex;
-    align-items:center;
-    /* align-items:flex-start; */
-    width: 35%;
-    justify-content: space-between; /* Distribute buttons and counter evenly */
-  }
-  
-  .counter-group button {
-    padding: 10px 15px;
-    padding-bottom: 11px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .counter-group button:first-child {
-    background-color: #f00; /* Red background for minus button */
-    color: #fff;
-  }
-  .counter-group button:nth-child(3) {
-    background-color: green;
-    color: #fff;
-  }
-  .counter{
-    padding-left:5px ;
-    padding-right:5px ;
-    font-size: 1.2em; /* Increase font size for prominence */
-    font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 5px;
+}
 
-  }
-  .disable-counter {
-    width: 20px; /* Adjust the width as needed */
-    height: 20px; /* Adjust the height as needed */
-  }
+.student-tiles {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: center;
+}
 
-  .add-student-modal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 80px; /* Adjust margin as needed */
-    margin-bottom: 40px; /* Adjust margin as needed */
-  }
-  .add-student-heading{
-    color: #333;
-    font-size: 18px; /* Adjust font size as needed */
-        font-weight: bold;
-        margin-bottom: 10px;
-    
-    }
-  .add-student-modal input {
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    width: 75%;
-    box-sizing: border-box;
-  }
-  
-  .add-student-modal button {
-    padding: 7px 10px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    margin-top: 0.8em;
-    cursor: pointer;
-  }
+.student-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+  width: 90%;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.serial-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5%;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.student-name {
+  width: 30%; /* Reduced to accommodate the input fields */
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.counter-group {
+  display: flex;
+  align-items: center;
+  width: 55%; /* Adjusted width to fit the input fields */
+  justify-content: space-between;
+}
+
+.count-input {
+  width: 20%; /* Adjust width based on your design preference */
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.total-score {
+  width: 15%; /* Adjust width as needed */
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.disable-counter {
+  width: 20px;
+  height: 20px;
+}
+
+.add-student-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+
+.add-student-heading {
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.add-student-modal input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 75%;
+  box-sizing: border-box;
+}
+
+.add-student-modal button {
+  padding: 7px 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  margin-top: 0.8em;
+  cursor: pointer;
+}

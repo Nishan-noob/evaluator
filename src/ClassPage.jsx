@@ -19,7 +19,9 @@ function ClassPage() {
         const fetchedStudents = studentDocs.docs.map((doc) => ({
           id: doc.id,
           name: doc.data().name,
-          count: doc.data().count || 0, // Initialize count to 0 if not present
+          count1: doc.data().count1 || 0, // Initialize count1 to 0 if not present
+          count2: doc.data().count2 || 0, // Initialize count2 to 0 if not present
+          count3: doc.data().count3 || 0, // Initialize count3 to 0 if not present
           disabled: doc.data().disabled || false, // Initialize disabled to false if not present
         }));
 
@@ -38,12 +40,17 @@ function ClassPage() {
         const studentsRef = collection(db, "classes", className, "students");
         const newStudentDoc = await addDoc(studentsRef, {
           name: newStudentName,
-          count: 0,
+          count1: 0,
+          count2: 0,
+          count3: 0,
           disabled: false,
         });
 
         // Update students state with the newly added student object
-        setStudents([...students, { id: newStudentDoc.id, name: newStudentName, count: 0, disabled: false }]);
+        setStudents([
+          ...students,
+          { id: newStudentDoc.id, name: newStudentName, count1: 0, count2: 0, count3: 0, disabled: false },
+        ]);
         setNewStudentName("");
       } catch (error) {
         console.error("Error adding student:", error);
@@ -51,24 +58,27 @@ function ClassPage() {
     }
   };
 
-  const handleCountChange = async (studentId, delta, disable = false) => {
-    // Update student count in state and Firestore
+  const handleCountChange = async (studentId, field, value, disable = false) => {
+    // Update student counts in state and Firestore
     const updatedStudents = students.map((student) =>
       student.id === studentId
-        ? { ...student, count: Math.max(0, student.count + delta), disabled: disable }
+        ? { ...student, [field]: Math.max(0, value), disabled: disable }
         : student
     );
     setStudents(updatedStudents);
 
-    // Update student count in Firestore
+    // Update student counts in Firestore
     const studentRef = doc(db, "classes", className, "students", studentId);
     try {
-      await updateDoc(studentRef, { count: updatedStudents.find((s) => s.id === studentId).count , disabled: disable });
+      await updateDoc(studentRef, {
+        [field]: updatedStudents.find((s) => s.id === studentId)[field],
+        disabled: disable,
+      });
     } catch (error) {
-      console.error("Error updating student count:", error);
-      // Consider showing an error message to the user
+      console.error("Error updating student counts:", error);
     }
   };
+
   const today = new Date();
   const date = today.getDate();
   const month = today.getMonth() + 1;
@@ -88,38 +98,52 @@ function ClassPage() {
           <span>{currentDate}</span>
         </div>
       </div>
-      {/* <h1>Students in {className}</h1> */}
       <Link to={`/class/${className}/leaderboard`}>
         <button className="leaderboard-link">Leaderboard</button>
       </Link>
       <div className="student-tiles">
-        {students.map((student, index) => (
-          <div key={student.id} className="student-tile">
-            <div className="serial-number">{index + 1}</div> {/* Use student.id for uniqueness */}
-            <div className="student-name">{student.name}</div>
-            <div className="counter-group">
-              <button
-                onClick={() => handleCountChange(student.id, -1)}
-                disabled={student.disabled}
-              >
-                -
-              </button>
-              <span className="counter">{student.count}</span>
-              <button
-                onClick={() => handleCountChange(student.id, 1)}
-                disabled={student.disabled}
-              >
-                +
-              </button>
-              <input
-                type="checkbox"
-                className="disable-counter"
-                checked={student.disabled}
-                onChange={() => handleCountChange(student.id, null, !student.disabled)}
-              />
+        {students.map((student, index) => {
+          const totalScore = student.count1 + student.count2 + student.count3;
+          return (
+            <div key={student.id} className="student-tile">
+              <div className="serial-number">{index + 1}</div>
+              <div className="student-name">{student.name}</div>
+              <div className="counter-group">
+                <input
+                  type="number"
+                  className="count-input"
+                  value={student.count1}
+                  onChange={(e) => handleCountChange(student.id, "count1", parseInt(e.target.value))}
+                  disabled={student.disabled}
+                  inputMode="numeric"
+                />
+                <input
+                  type="number"
+                  className="count-input"
+                  value={student.count2}
+                  onChange={(e) => handleCountChange(student.id, "count2", parseInt(e.target.value))}
+                  disabled={student.disabled}
+                  inputMode="numeric"
+                />
+                <input
+                  type="number"
+                  className="count-input"
+                  value={student.count3}
+                  onChange={(e) => handleCountChange(student.id, "count3", parseInt(e.target.value))}
+                  disabled={student.disabled}
+                  inputMode="numeric"
+                />
+                <span className="total-score">{totalScore}</span>
+                <input
+                  type="checkbox"
+                  className="disable-counter"
+                  checked={student.disabled}
+                  onChange={() => handleCountChange(student.id, null, null, !student.disabled)}
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div className="add-student-modal">
         <p className="add-student-heading">Add New Student </p>
