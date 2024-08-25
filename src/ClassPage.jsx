@@ -109,30 +109,39 @@ function ClassPage() {
               <div className="serial-number">{index + 1}</div>
               <div className="student-name">{student.name}</div>
               <div className="counter-group">
-                <input
-                  type="number"
-                  className="count-input"
-                  value={student.count1}
-                  onChange={(e) => handleCountChange(student.id, "count1", parseInt(e.target.value))}
-                  disabled={student.disabled}
-                  inputMode="numeric"
-                />
-                <input
-                  type="number"
-                  className="count-input"
-                  value={student.count2}
-                  onChange={(e) => handleCountChange(student.id, "count2", parseInt(e.target.value))}
-                  disabled={student.disabled}
-                  inputMode="numeric"
-                />
-                <input
-                  type="number"
-                  className="count-input"
-                  value={student.count3}
-                  onChange={(e) => handleCountChange(student.id, "count3", parseInt(e.target.value))}
-                  disabled={student.disabled}
-                  inputMode="numeric"
-                />
+                <div className="input-group">
+                  <label className="input-label">Ayath</label>
+                  <input
+                    type="number"
+                    className="count-input"
+                    value={student.count1}
+                    onChange={(e) => handleCountChange(student.id, "count1", parseInt(e.target.value))}
+                    disabled={student.disabled}
+                    inputMode="numeric"
+                  />
+                </div>
+                <div className="input-group">
+                  <label className="input-label">Fluency</label>
+                  <input
+                    type="number"
+                    className="count-input"
+                    value={student.count2}
+                    onChange={(e) => handleCountChange(student.id, "count2", parseInt(e.target.value))}
+                    disabled={student.disabled}
+                    inputMode="numeric"
+                  />
+                </div>
+                <div className="input-group">
+                  <label className="input-label">Tajweed</label>
+                  <input
+                    type="number"
+                    className="count-input"
+                    value={student.count3}
+                    onChange={(e) => handleCountChange(student.id, "count3", parseInt(e.target.value))}
+                    disabled={student.disabled}
+                    inputMode="numeric"
+                  />
+                </div>
                 <span className="total-score">{totalScore}</span>
                 <input
                   type="checkbox"
@@ -146,7 +155,7 @@ function ClassPage() {
         })}
       </div>
       <div className="add-student-modal">
-        <p className="add-student-heading">Add New Student </p>
+        <p className="add-student-heading">Add New Student</p>
         <input
           type="text"
           value={newStudentName}
@@ -157,6 +166,7 @@ function ClassPage() {
       </div>
     </div>
   );
+  
 }
 
 export default ClassPage;

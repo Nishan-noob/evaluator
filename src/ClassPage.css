@@ -91,25 +91,26 @@
   justify-content: space-between;
 }
 
+
 .count-input {
-  width: 20%; /* Adjust width based on your design preference */
-  padding: 5px;
-  border-radius: 5px;
   border: 1px solid #ccc;
   text-align: center;
-  font-size: 1.2em;
+  width: 70px;
+  padding: 5px;
+  font-size: 1.1em;
 }
-
 .total-score {
-  width: 15%; /* Adjust width as needed */
+  /* width: 15%; Adjust width as needed */
   text-align: center;
   font-size: 1.2em;
   font-weight: bold;
+  margin-left: 10px;
 }
 
 .disable-counter {
   width: 20px;
   height: 20px;
+  margin-left: 15px;
 }
 
 .add-student-modal {
@@ -148,4 +149,22 @@
   border-radius: 8px;
   margin-top: 0.8em;
   cursor: pointer;
+}
+.counter-group {
+  display: flex;
+  align-items: center;
+  width: 45%;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-label {
+  font-size: 0.9em;
+  margin-bottom: 5px;
 }
