@@ -2,26 +2,35 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "./firebase";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
-import jsPDF from "jspdf"; // Make sure this import is uncommented
+import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import "./Leaderboard.css";
 
 const Leaderboard = () => {
   const { className } = useParams();
-  const [students, setStudents] = useState([]); // Array to store fetched student data
+  const [students, setStudents] = useState([]);
 
-  // Fetch student data on component mount and listen for changes
   useEffect(() => {
     const fetchStudents = async () => {
       try {
         const studentsRef = collection(db, "classes", className, "students");
         const studentDocs = await getDocs(studentsRef);
 
-        const fetchedStudents = studentDocs.docs.map((doc) => ({
-          id: doc.id,
-          name: doc.data().name,
-          count: doc.data().count || 0,
-        }));
+        const fetchedStudents = studentDocs.docs.map((doc) => {
+          const data = doc.data();
+          const count1 = data.count1 || 0;
+          const count2 = data.count2 || 0;
+          const count3 = data.count3 || 0;
+          const total = count1 + count2 + count3;
+          return {
+            id: doc.id,
+            name: data.name,
+            count1,
+            count2,
+            count3,
+            total,
+          };
+        });
 
         setStudents(fetchedStudents);
       } catch (error) {
@@ -31,27 +40,33 @@ const Leaderboard = () => {
 
     fetchStudents();
 
-    // Listen for real-time updates to student data (optional)
     const unsubscribe = onSnapshot(
       collection(db, "classes", className, "students"),
       (snapshot) => {
-        const updatedStudents = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          name: doc.data().name,
-          count: doc.data().count || 0,
-        }));
+        const updatedStudents = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          const count1 = data.count1 || 0;
+          const count2 = data.count2 || 0;
+          const count3 = data.count3 || 0;
+          const total = count1 + count2 + count3;
+          return {
+            id: doc.id,
+            name: data.name,
+            count1,
+            count2,
+            count3,
+            total,
+          };
+        });
         setStudents(updatedStudents);
       }
     );
 
-    // Cleanup function to unsubscribe from real-time updates on unmount
     return () => unsubscribe();
-  }, [className]); // Dependency array ensures fetching happens on class change
+  }, [className]);
 
-  // Sort students by count in ascending order
-  const sortedStudents = students.sort((a, b) => a.count - b.count);
+  const sortedStudents = students.sort((a, b) => a.total - b.total);
 
-  // Today's date
   const today = new Date();
   const date = today.getDate();
   const month = today.getMonth() + 1;
@@ -59,35 +74,21 @@ const Leaderboard = () => {
   const lastTwoDigitsOfYear = year % 100;
   const currentDate = date + "/" + month + "/" + lastTwoDigitsOfYear;
 
-  const leaderboardRef = useRef(null); // Reference to the leaderboard container
-
-  // const handleDownloadPDF = () => {
-  //   const input = leaderboardRef.current;
-  //   html2canvas(input).then((canvas) => {
-  //     const imgData = canvas.toDataURL("image/png");
-  //     const pdf = new jsPDF("p", "mm", "a4");
-  //     const imgProps = pdf.getImageProperties(imgData);
-  //     const pdfWidth = pdf.internal.pageSize.getWidth();
-  //     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-  //     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-  //     pdf.save(`${className}_Leaderboard.pdf`);
-  //   });
-  // };
+  const leaderboardRef = useRef(null);
 
   const handleDownloadPDF = () => {
     const input = leaderboardRef.current;
 
     html2canvas(input, {
-      scale: 2, // Increase the scale for better quality
-      useCORS: true, // Enable cross-origin images
+      scale: 2,
+      useCORS: true,
     }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
 
-      // Calculate the number of pages needed
-      const imgWidth = 210; // A4 size width in mm
+      const imgWidth = 210;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const pageHeight = 297; // A4 size height in mm
+      const pageHeight = 297;
       let heightLeft = imgHeight;
       let position = 0;
 
@@ -119,22 +120,20 @@ const Leaderboard = () => {
           </div>
         </div>
         <div className="leaderboard-tiles">
-          {/* Heading row */}
           <div className="leaderboard-heading">
             <span className="rank-heading">Rank</span>
             <div className="student-info">
               <span className="name-heading">Name</span>
-              <span className="mistakes-heading">Mistakes</span>
+              <span className="mistakes-heading">Total Mistakes</span>
             </div>
           </div>
 
-          {/* Student tiles */}
           {sortedStudents.map((student, index) => (
             <div key={student.id} className="student-tile">
               <span className="rank">{index + 1}.</span>
               <div className="student-info">
                 <span className="student-name">{student.name}</span>
-                <span className="student-count">{student.count}</span>
+                <span className="student-count">{student.total}</span>
               </div>
             </div>
           ))}
