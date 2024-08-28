@@ -86,7 +86,9 @@
     justify-content: space-between;
     width: 90%;
   }
-  
+  .student-name{
+    width:80%
+  }
   .student-name,
   .student-count {
     margin-right: 10px; /* Spacing between name and count */
