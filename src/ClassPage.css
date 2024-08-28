@@ -83,6 +83,9 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+.Edit_button,.Dlt_button{
+  margin-right: 5px;
+}
 
 .counter-group {
   display: flex;
