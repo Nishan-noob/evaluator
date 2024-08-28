@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { db } from "./firebase";
-import { collection, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import "./ClassPage.css";
 
 function ClassPage() {
@@ -49,7 +55,14 @@ function ClassPage() {
         // Update students state with the newly added student object
         setStudents([
           ...students,
-          { id: newStudentDoc.id, name: newStudentName, count1: 0, count2: 0, count3: 0, disabled: false },
+          {
+            id: newStudentDoc.id,
+            name: newStudentName,
+            count1: 0,
+            count2: 0,
+            count3: 0,
+            disabled: false,
+          },
         ]);
         setNewStudentName("");
       } catch (error) {
@@ -58,7 +71,12 @@ function ClassPage() {
     }
   };
 
-  const handleCountChange = async (studentId, field, value, disable = false) => {
+  const handleCountChange = async (
+    studentId,
+    field,
+    value,
+    disable = false
+  ) => {
     // Update student counts in state and Firestore
     const updatedStudents = students.map((student) =>
       student.id === studentId
@@ -76,6 +94,41 @@ function ClassPage() {
       });
     } catch (error) {
       console.error("Error updating student counts:", error);
+    }
+  };
+
+  // Edit Student Function
+  const handleEditStudent = (studentId, studentName) => {
+    const newStudentName = prompt("Enter new name:", studentName);
+    if (newStudentName && newStudentName !== studentName) {
+      const studentRef = doc(db, "classes", className, "students", studentId);
+      updateDoc(studentRef, { name: newStudentName })
+        .then(() => {
+          setStudents(
+            students.map((student) =>
+              student.id === studentId
+                ? { ...student, name: newStudentName }
+                : student
+            )
+          );
+        })
+        .catch((error) => {
+          console.error("Error updating student name:", error);
+        });
+    }
+  };
+
+  // Delete Student Function
+  const handleDeleteStudent = (studentId) => {
+    if (window.confirm("Are you sure you want to delete this student?")) {
+      const studentRef = doc(db, "classes", className, "students", studentId);
+      deleteDoc(studentRef)
+        .then(() => {
+          setStudents(students.filter((student) => student.id !== studentId));
+        })
+        .catch((error) => {
+          console.error("Error deleting student:", error);
+        });
     }
   };
 
@@ -108,14 +161,58 @@ function ClassPage() {
             <div key={student.id} className="student-tile">
               <div className="serial-number">{index + 1}</div>
               <div className="student-name">{student.name}</div>
-              <div className="Edit_button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg></div>
-              <div className="Dlt_button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></div>
+              <div className="Edit_button">
+                <button
+                  onClick={() => handleEditStudent(student.id, student.name)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
+                    <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
+                  </svg>
+                </button>
+              </div>
+              <div className="Dlt_button">
+                <button onClick={() => handleDeleteStudent(student.id)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
+              </div>
               <div className="counter-group">
                 <input
                   type="number"
                   className="count-input"
                   value={student.count1}
-                  onChange={(e) => handleCountChange(student.id, "count1", parseInt(e.target.value))}
+                  onChange={(e) =>
+                    handleCountChange(
+                      student.id,
+                      "count1",
+                      parseInt(e.target.value)
+                    )
+                  }
                   disabled={student.disabled}
                   inputMode="numeric"
                 />
@@ -123,7 +220,13 @@ function ClassPage() {
                   type="number"
                   className="count-input"
                   value={student.count2}
-                  onChange={(e) => handleCountChange(student.id, "count2", parseInt(e.target.value))}
+                  onChange={(e) =>
+                    handleCountChange(
+                      student.id,
+                      "count2",
+                      parseInt(e.target.value)
+                    )
+                  }
                   disabled={student.disabled}
                   inputMode="numeric"
                 />
@@ -131,7 +234,13 @@ function ClassPage() {
                   type="number"
                   className="count-input"
                   value={student.count3}
-                  onChange={(e) => handleCountChange(student.id, "count3", parseInt(e.target.value))}
+                  onChange={(e) =>
+                    handleCountChange(
+                      student.id,
+                      "count3",
+                      parseInt(e.target.value)
+                    )
+                  }
                   disabled={student.disabled}
                   inputMode="numeric"
                 />
@@ -140,7 +249,9 @@ function ClassPage() {
                   type="checkbox"
                   className="disable-counter"
                   checked={student.disabled}
-                  onChange={() => handleCountChange(student.id, null, null, !student.disabled)}
+                  onChange={() =>
+                    handleCountChange(student.id, null, null, !student.disabled)
+                  }
                 />
               </div>
             </div>

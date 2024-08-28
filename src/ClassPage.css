@@ -82,8 +82,10 @@
   font-size: 1.2em;
   font-weight: bold;
   text-transform: uppercase;
+  margin-left: 10px;
 }
 .Edit_button,.Dlt_button{
+  /* color: white; */
   margin-right: 5px;
 }
 
