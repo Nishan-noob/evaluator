@@ -161,9 +161,7 @@ function ClassPage() {
             <div key={student.id} className="student-tile">
               <div className="serial-number">{index + 1}</div>
               <div className="student-name">{student.name}</div>
-              <div className="Edit_button">
-                <button
-                  onClick={() => handleEditStudent(student.id, student.name)}
+              <div className="Edit_button" onClick={() => handleEditStudent(student.id, student.name)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +169,7 @@ function ClassPage() {
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#ffffff"
+                    stroke="#000000"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -179,17 +177,16 @@ function ClassPage() {
                     <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
                     <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
                   </svg>
-                </button>
+                {/* </button> */}
               </div>
-              <div className="Dlt_button">
-                <button onClick={() => handleDeleteStudent(student.id)}>
+              <div className="Dlt_button" onClick={() => handleDeleteStudent(student.id)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#ffffff"
+                    stroke="#000000"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -199,7 +196,7 @@ function ClassPage() {
                     <line x1="10" y1="11" x2="10" y2="17"></line>
                     <line x1="14" y1="11" x2="14" y2="17"></line>
                   </svg>
-                </button>
+                {/* </button> */}
               </div>
               <div className="counter-group">
                 <input
