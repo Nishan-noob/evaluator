@@ -66,6 +66,18 @@ const Leaderboard = () => {
   }, [className]);
 
   const sortedStudents = students.sort((a, b) => a.total - b.total);
+  const finalStudentList = [];
+  let preTotal = sortedStudents.length > 0 ? sortedStudents[0].total : 0;
+  let prevRank = 1;
+  sortedStudents.forEach((student, index) => {
+    if (student.total > preTotal) {
+      // Increment the rank if the current student's total is greater than the previous total
+      prevRank = prevRank + 1;
+      preTotal = student.total;
+    } // Add the student and their rank to the final student list
+
+    finalStudentList.push([student, prevRank]);
+  });
 
   const today = new Date();
   const date = today.getDate();
@@ -109,8 +121,8 @@ const Leaderboard = () => {
   return (
     <div className="container">
       <div className="leaderboard-page" ref={leaderboardRef}>
-        <h1>QURAN RECITATION TEST</h1>
-        <h1>RANK LIST</h1>
+        <h1 className="h1">QURAN RECITATION TEST</h1>
+        <h1 className="h1">RANK LIST</h1>
         <div className="inline-heading">
           <div className="currentClassTile">
             <span>{className}</span>
@@ -128,13 +140,14 @@ const Leaderboard = () => {
             </div>
           </div>
 
-          {sortedStudents.map((student, index) => (
+          {finalStudentList.map(([student, rank]) => (
             <div key={student.id} className="student-tile">
-              <span className="rank">{index + 1}.</span>
+                  <span className="rank">{rank}.</span>{" "}
               <div className="student-info">
-                <span className="student-name">{student.name}</span>
-                <span className="student-count">{student.total}</span>
+                      <span className="student-name">{student.name}</span>     {" "}
+                <span className="student-count">{student.total}</span>   {" "}
               </div>
+               {" "}
             </div>
           ))}
         </div>
